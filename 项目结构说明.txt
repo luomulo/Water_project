@@ -1,0 +1,29 @@
+keyur.diwan.project.waterReminder 包：
+
+InitUserInfoActivity：这个活动主要负责初始化用户的基本信息，例如体重、起床时间和睡觉时间。
+MainActivity：这是应用的主活动，用于显示用户的水分摄入情况和提供添加水分记录的功能。
+StatsActivity：负责显示用户的水分摄入统计信息，包括每日的摄入百分比和柱状图展示。
+WalkThroughActivity：引导页活动，向用户展示应用的功能和引导用户完成初始化。
+keyur.diwan.project.waterReminder.fragments 包：
+
+BottomSheetFragment：这个片段用于显示底部弹出的选项，提供一些操作的入口。
+keyur.diwan.project.waterReminder.helpers 包：
+
+AlarmHelper：提供设置和取消定时提醒的功能，与应用的提醒系统交互。
+NotificationHelper：处理创建和显示通知的逻辑，与应用的通知系统交互。
+SqliteHelper：负责处理与 SQLite 数据库相关的操作，用于存储和检索用户的水分摄入记录。
+keyur.diwan.project.waterReminder.recievers 包：
+
+BootReceiver：接收设备启动广播，用于在设备启动时重新设置定时提醒。
+NotifierReceiver：接收通知广播，负责显示用户设置的通知。
+其他文件：
+
+ChartXValueFormatter：这个文件包含一个自定义的 X 轴数值格式化类，用于柱状图的 X 轴标签格式化。
+MainActivityViewModel：这可能是与主活动相关的视图模型，用于处理与 UI 相关的数据和逻辑。
+布局文件：
+
+activity_main.xml：主活动的布局文件，定义了主界面的外观和组件。
+activity_init_user_info.xml：初始化用户信息活动的布局文件，包括设置体重、起床时间和睡觉时间等。
+activity_stats.xml：统计信息活动的布局文件，用于显示水分摄入的柱状图和其他相关信息。
+activity_walk_through.xml：引导页活动的布局文件，向用户介绍应用的功能。
+walk_through_one.xml, walk_through_two.xml, walk_through_three.xml：引导页中每个页面的布局文件。
