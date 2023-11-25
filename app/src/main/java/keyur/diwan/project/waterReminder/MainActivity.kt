@@ -161,14 +161,14 @@ class MainActivity : AppCompatActivity() {
             sharedPref.edit().putBoolean(AppUtils.NOTIFICATION_STATUS_KEY, notificStatus).apply()
             if (notificStatus) {
                 btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell))
-                Snackbar.make(it, "Notification Enabled..", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(it, "通知已开启", Snackbar.LENGTH_SHORT).show()
                 alarm.setAlarm(
                     this,
                     sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
                 )
             } else {
                 btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell_disabled))
-                Snackbar.make(it, "Notification Disabled..", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(it, "通知已关闭", Snackbar.LENGTH_SHORT).show()
                 alarm.cancelAlarm(this)
             }
         }

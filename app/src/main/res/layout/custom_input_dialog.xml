@@ -14,7 +14,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Custom Input"
+                android:hint="输入自定义数量"
                 android:inputType="numberSigned" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.cardview.widget.CardView>

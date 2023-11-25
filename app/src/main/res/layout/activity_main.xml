@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:text="Daily Drink Target"
+            android:text="每日饮水目标"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -302,7 +302,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Custom"
+                            android:text="自定义"
                             android:textColor="@color/colorBlack" />
 
                 </LinearLayout>
