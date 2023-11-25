@@ -18,6 +18,9 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 
+/**
+ * 用于初始化用户信息的活动。
+ */
 class InitUserInfoActivity : AppCompatActivity() {
 
     private var weight: String = ""
@@ -27,21 +30,29 @@ class InitUserInfoActivity : AppCompatActivity() {
     private lateinit var sharedPref: SharedPreferences
     private var doubleBackToExitPressedOnce = false
 
+    /**
+     * 在创建活动时调用，用于设置界面和初始化数据。
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 检查设备是否为24小时制
         val is24h = android.text.format.DateFormat.is24HourFormat(this.applicationContext)
 
+        // 设置状态栏颜色为浅色
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         setContentView(R.layout.activity_init_user_info)
 
+        // 获取共享偏好实例
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
 
+        // 获取用户设定的起床和睡觉时间
         wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME, 1558323000000)
         sleepingTime = sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY, 1558369800000)
 
+        // 设置点击事件，选择起床时间
         etWakeUpTime.editText!!.setOnClickListener {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = wakeupTime
@@ -65,7 +76,7 @@ class InitUserInfoActivity : AppCompatActivity() {
             mTimePicker.show()
         }
 
-
+        // 设置点击事件，选择睡觉时间
         etSleepTime.editText!!.setOnClickListener {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
@@ -89,16 +100,22 @@ class InitUserInfoActivity : AppCompatActivity() {
             mTimePicker.show()
         }
 
+        // 设置“Continue”按钮点击事件
         btnContinue.setOnClickListener {
 
-            val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            // 隐藏键盘
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(init_user_info_parent_layout.windowToken, 0)
 
+            // 获取输入的体重和锻炼时间
             weight = etWeight.editText!!.text.toString()
             workTime = etWorkTime.editText!!.text.toString()
 
+            // 根据输入判断是否满足条件，如果不满足则显示相应提示
             when {
-                TextUtils.isEmpty(weight) -> Snackbar.make(it, "Please input your weight", Snackbar.LENGTH_SHORT).show()
+                TextUtils.isEmpty(weight) -> Snackbar.make(it, "Please input your weight", Snackbar.LENGTH_SHORT)
+                    .show()
                 weight.toInt() > 200 || weight.toInt() < 20 -> Snackbar.make(
                     it,
                     "Please input a valid weight",
@@ -116,6 +133,7 @@ class InitUserInfoActivity : AppCompatActivity() {
                 ).show()
                 else -> {
 
+                    // 将用户信息保存到共享偏好中
                     val editor = sharedPref.edit()
                     editor.putInt(AppUtils.WEIGHT_KEY, weight.toInt())
                     editor.putInt(AppUtils.WORK_TIME_KEY, workTime.toInt())
@@ -123,6 +141,7 @@ class InitUserInfoActivity : AppCompatActivity() {
                     editor.putLong(AppUtils.SLEEPING_TIME_KEY, sleepingTime)
                     editor.putBoolean(AppUtils.FIRST_RUN_KEY, false)
 
+                    // 计算总摄入量并保存
                     val totalIntake = AppUtils.calculateIntake(weight.toInt(), workTime.toInt())
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
@@ -131,13 +150,14 @@ class InitUserInfoActivity : AppCompatActivity() {
                     editor.apply()
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
-
                 }
             }
         }
-
     }
 
+    /**
+     * 处理返回按钮点击事件，双击退出应用。
+     */
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()

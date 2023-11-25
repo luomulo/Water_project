@@ -19,13 +19,20 @@ import keyur.diwan.project.waterReminder.R
 import keyur.diwan.project.waterReminder.utils.AppUtils
 import java.util.*
 
+/**
+ * NotificationHelper 类用于创建和管理通知，包括设置通知通道和生成通知实例。
+ *
+ * @param ctx 应用程序上下文
+ */
 class NotificationHelper(val ctx: Context) {
     private var notificationManager: NotificationManager? = null
-
+    // 定义通知通道的ID和名称
     private val CHANNEL_ONE_ID = "io.github.z3r0c00l_2k.aquadroid.CHANNELONE"
     private val CHANNEL_ONE_NAME = "Channel One"
 
-
+    /**
+     * 创建通知通道，仅在 Android 版本大于等于 O（26）时执行。
+     */
     private fun createChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val prefs = ctx.getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
@@ -54,7 +61,14 @@ class NotificationHelper(val ctx: Context) {
             getManager()!!.createNotificationChannel(notificationChannel)
         }
     }
-
+    /**
+     * 获取通知实例。
+     *
+     * @param title 通知标题
+     * @param body 通知正文
+     * @param notificationsTone 通知铃声的 URI
+     * @return NotificationCompat.Builder 实例
+     */
     fun getNotification(
         title: String,
         body: String,
@@ -87,8 +101,13 @@ class NotificationHelper(val ctx: Context) {
 
         return notification
     }
-
+    /**
+     * 检查是否应该发送通知。
+     *
+     * @return 如果应该发送通知，则返回 true；否则返回 false
+     */
     private fun shallNotify(): Boolean {
+        // 在此处实现判断是否发送通知的逻辑
         val prefs = ctx.getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         val sqliteHelper = SqliteHelper(ctx)
 
@@ -125,7 +144,15 @@ class NotificationHelper(val ctx: Context) {
     /* Thanks to:
      * https://stackoverflow.com/questions/7676149/compare-only-the-time-portion-of-two-dates-ignoring-the-date-part
     */
+    /**
+     * 比较两个时间的方法，用于计算经过的时间。
+     *
+     * @param currentTime 当前时间
+     * @param timeToRun 要比较的时间
+     * @return 两个时间之间的毫秒数差
+     */
     private fun compareTimes(currentTime: Date, timeToRun: Date): Long {
+        // 在此处实现时间比较的逻辑
         val currentCal = Calendar.getInstance()
         currentCal.time = currentTime
 
@@ -137,13 +164,22 @@ class NotificationHelper(val ctx: Context) {
 
         return currentCal.timeInMillis - runCal.timeInMillis
     }
-
+    /**
+     * 发送通知。
+     *
+     * @param id 通知的唯一标识符
+     * @param notification NotificationCompat.Builder 实例
+     */
     fun notify(id: Long, notification: NotificationCompat.Builder?) {
         if (shallNotify()) {
             getManager()!!.notify(id.toInt(), notification!!.build())
         }
     }
-
+    /**
+     * 获取 NotificationManager 实例。
+     *
+     * @return NotificationManager 实例
+     */
     private fun getManager(): NotificationManager? {
         if (notificationManager == null) {
             notificationManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

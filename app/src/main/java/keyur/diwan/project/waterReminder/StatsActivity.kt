@@ -27,13 +27,18 @@ class StatsActivity : AppCompatActivity() {
     private var totalPercentage: Float = 0f
     private var totalGlasses: Float = 0f
 
+    /**
+     * 在活动创建时调用，用于初始化界面和获取统计数据。
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats)
 
+        // 获取共享偏好和SQLite帮助类的实例
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         sqliteHelper = SqliteHelper(this)
 
+        // 设置返回按钮点击事件
         btnBack.setOnClickListener {
             finish()
         }
@@ -41,10 +46,11 @@ class StatsActivity : AppCompatActivity() {
         val entries = ArrayList<Entry>()
         val dateArray = ArrayList<String>()
 
+        // 从SQLite数据库中获取所有统计数据
         val cursor: Cursor = sqliteHelper.getAllStats()
 
         if (cursor.moveToFirst()) {
-
+            // 遍历数据库中的数据
             for (i in 0 until cursor.count) {
                 dateArray.add(cursor.getString(1))
                 val percent = cursor.getInt(2) / cursor.getInt(3).toFloat() * 100
@@ -53,13 +59,12 @@ class StatsActivity : AppCompatActivity() {
                 entries.add(Entry(i.toFloat(), percent))
                 cursor.moveToNext()
             }
-
         } else {
             Toast.makeText(this, "Empty", Toast.LENGTH_LONG).show()
         }
 
         if (!entries.isEmpty()) {
-
+            // 配置图表属性
             chart.description.isEnabled = false
             chart.animateY(1000, Easing.Linear)
             chart.viewPortHandler.setMaximumScaleX(1.5f)
@@ -80,20 +85,23 @@ class StatsActivity : AppCompatActivity() {
             chart.setDrawMarkers(false)
             chart.xAxis.labelCount = 5
 
+            // 配置图表的左侧Y轴
             val leftAxis = chart.axisLeft
-            leftAxis.axisMinimum = 0f // always start at zero
-            val maxObject: Entry = entries.maxBy { it.y }!! // entries is not empty here
-            leftAxis.axisMaximum = max(a = maxObject.y, b = 100f) + 15f // 15% margin on top
+            leftAxis.axisMinimum = 0f // 始终从零开始
+            val maxObject: Entry = entries.maxBy { it.y }!! // 这里entries不为空
+            leftAxis.axisMaximum = max(a = maxObject.y, b = 100f) + 15f // 顶部15%的边距
             val targetLine = LimitLine(100f, "")
             targetLine.enableDashedLine(5f, 5f, 0f)
             leftAxis.addLimitLine(targetLine)
 
+            // 配置图表的右侧Y轴
             val rightAxis = chart.axisRight
             rightAxis.setDrawGridLines(false)
             rightAxis.setDrawZeroLine(false)
             rightAxis.setDrawAxisLine(false)
             rightAxis.setDrawLabels(false)
 
+            // 配置图表的数据集
             val dataSet = LineDataSet(entries, "Label")
             dataSet.setDrawCircles(false)
             dataSet.lineWidth = 2.5f
@@ -108,30 +116,26 @@ class StatsActivity : AppCompatActivity() {
             chart.data = lineData
             chart.invalidate()
 
-            val remaining = sharedPref.getInt(
-                AppUtils.TOTAL_INTAKE,
-                0
-            ) - sqliteHelper.getIntook(AppUtils.getCurrentDate()!!)
-
+            // 计算剩余摄入量并更新界面元素
+            val remaining = sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0) - sqliteHelper.getIntook(
+                AppUtils.getCurrentDate()!!
+            )
             if (remaining > 0) {
                 remainingIntake.text = "$remaining ml"
             } else {
                 remainingIntake.text = "0 ml"
             }
 
-            targetIntake.text = "${sharedPref.getInt(
-                AppUtils.TOTAL_INTAKE,
-                0
-            )
-            } ml"
-
-            val percentage = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!) * 100 / sharedPref.getInt(
-                AppUtils.TOTAL_INTAKE,
-                0
-            )
+            // 显示目标摄入量和当天摄入百分比
+            targetIntake.text = "${sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0)} ml"
+            val percentage =
+                sqliteHelper.getIntook(AppUtils.getCurrentDate()!!) * 100 / sharedPref.getInt(
+                    AppUtils.TOTAL_INTAKE,
+                    0
+                )
             waterLevelView.centerTitle = "$percentage%"
             waterLevelView.progressValue = percentage
-
         }
     }
 }
+

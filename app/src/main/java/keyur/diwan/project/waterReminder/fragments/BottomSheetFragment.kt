@@ -48,14 +48,14 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
 
     }
 
-
+    //视图创建后的初始化
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // 检查是否为24小时制
         val is24h = android.text.format.DateFormat.is24HourFormat(mCtx)
-
+        // 获取SharedPreferences实例
         sharedPref = mCtx.getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-
+        // 从SharedPreferences中加载设置，并在相应的EditText中显示
         etWeight.editText!!.setText("" + sharedPref.getInt(AppUtils.WEIGHT_KEY, 0))
         etWorkTime.editText!!.setText("" + sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0))
         etTarget.editText!!.setText("" + sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0))
@@ -75,7 +75,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
                 Uri.parse(currentToneUri)
             ).getTitle(mCtx)
         )
-
+        // 设置提醒频率的RadioGroup监听器
         radioNotificItervel.setOnClickedButtonListener { button, position ->
             notificFrequency = when (position) {
                 0 -> 30
@@ -84,6 +84,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
                 else -> 30
             }
         }
+        // 根据用户设置，初始化提醒频率的RadioGroup
         notificFrequency = sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30)
         when (notificFrequency) {
             30 -> radioNotificItervel.position = 0
@@ -94,8 +95,9 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
                 notificFrequency = 30
             }
         }
-
+        // 设置铃声的选择按钮监听器
         etRingtone.editText!!.setOnClickListener {
+            // 启动铃声选择器
             val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
             intent.putExtra(
@@ -127,7 +129,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
                 cal.get(Calendar.MINUTE)
             )
         )
-
+        // 设置起床时间的EditText点击监听器
         etWakeUpTime.editText!!.setOnClickListener {
 
             val calendar = Calendar.getInstance()
@@ -152,7 +154,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
             mTimePicker.show()
         }
 
-
+        // 设置睡觉时间的EditText点击监听器
         etSleepTime.editText!!.setOnClickListener {
 
             val calendar = Calendar.getInstance()
@@ -176,7 +178,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
             mTimePicker.setTitle("Select Sleeping Time")
             mTimePicker.show()
         }
-
+        // 更新按钮点击监听器
         btnUpdate.setOnClickListener {
 
             val currentTarget = sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0)
@@ -267,10 +269,10 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
             }
         }
     }
-
+    // 处理铃声选择器返回结果的回调
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == 999) {
-
+            // 处理铃声选择的结果
             val uri = data!!.getParcelableArrayExtra( RingtoneManager.EXTRA_RINGTONE_PICKED_URI) as Uri
             currentToneUri = uri.toString()
             sharedPref.edit().putString(AppUtils.NOTIFICATION_TONE_URI_KEY, currentToneUri).apply()
