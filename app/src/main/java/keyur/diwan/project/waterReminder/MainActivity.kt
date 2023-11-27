@@ -126,12 +126,12 @@ class MainActivity : AppCompatActivity() {
                         inTook += selectedOption!!
                         setWaterLevel(inTook, totalIntake)
 
-                        Snackbar.make(it, "Your water intake was saved...!!", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(it, "你的饮水量已保存！！", Snackbar.LENGTH_SHORT)
                             .show()
 
                     }
                 } else {
-                    Snackbar.make(it, "You already achieved the goal", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(it, "你已经达成饮水目标了！！！", Snackbar.LENGTH_SHORT).show()
                 }
                 selectedOption = null
                 tvCustom.text = "Custom"

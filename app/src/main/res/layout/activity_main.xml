@@ -19,6 +19,30 @@
             android:src="@drawable/ic_settings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+            android:id="@+id/history"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="4dp"
+            android:src="@drawable/baseline_history_24"
+            app:layout_constraintEnd_toStartOf="@+id/btnMenu"
+            app:layout_constraintTop_toTopOf="@+id/btnMenu"/>
+    <ImageView
+            android:id="@+id/share"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="4dp"
+            android:src="@drawable/baseline_share_24"
+            app:layout_constraintEnd_toStartOf="@+id/history"
+            app:layout_constraintTop_toTopOf="@+id/btnMenu"/>
+
+
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnNotific"

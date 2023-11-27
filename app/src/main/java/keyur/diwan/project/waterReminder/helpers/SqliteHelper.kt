@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 /**
  * SQLite 数据库辅助类，用于管理和操作水份提醒应用的统计数据。
@@ -86,11 +87,14 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         val db = this.readableDatabase
         db.rawQuery(selectQuery, arrayOf(date)).use {
             if (it.moveToFirst()) {
-                return it.getInt(it.getColumnIndex(KEY_INTOOK))
+                val intResult = it.getInt(it.getColumnIndex(KEY_INTOOK))
+                Log.d("DatabaseQuery", "Intook for $date: $intResult")
+                return intResult
             }
         }
         return 0
     }
+
 
     /**
      * 更新指定日期的当日摄入量。
