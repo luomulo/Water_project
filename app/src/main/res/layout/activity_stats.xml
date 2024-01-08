@@ -7,15 +7,19 @@
         android:layout_height="match_parent"
         android:background="@drawable/ic_app_bg"
         tools:context=".StatsActivity">
+
     <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart"
             android:layout_width="0dp"
             android:layout_height="220dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
     <ImageButton
             android:background="?attr/selectableItemBackground"
             android:layout_width="40dp"

@@ -19,26 +19,26 @@
             android:src="@drawable/ic_settings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    <ImageView
-            android:id="@+id/history"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="4dp"
-            android:src="@drawable/baseline_history_24"
-            app:layout_constraintEnd_toStartOf="@+id/btnMenu"
-            app:layout_constraintTop_toTopOf="@+id/btnMenu"/>
-    <ImageView
-            android:id="@+id/share"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="4dp"
-            android:src="@drawable/baseline_share_24"
-            app:layout_constraintEnd_toStartOf="@+id/history"
-            app:layout_constraintTop_toTopOf="@+id/btnMenu"/>
+<!--    <ImageView-->
+<!--            android:id="@+id/history"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:background="?attr/selectableItemBackground"-->
+<!--            android:padding="4dp"-->
+<!--            android:src="@drawable/baseline_history_24"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/btnMenu"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/btnMenu"/>-->
+<!--    <ImageView-->
+<!--            android:id="@+id/share"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:background="?attr/selectableItemBackground"-->
+<!--            android:padding="4dp"-->
+<!--            android:src="@drawable/baseline_share_24"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/history"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/btnMenu"/>-->
 
 
 
@@ -349,9 +349,9 @@
             app:layout_constraintTop_toBottomOf="@+id/tvIntook"
             app:markerColor="@color/colorSkyBlue"
             app:markers="100"
-            app:progressBackgroundColor="#43F69F"
+            app:progressBackgroundColor="@color/colorWhite"
             app:progressBarHeight="10dp"
-            app:progressColor="@color/colorWhite"
+            app:progressColor="#43F69F"
             app:textColor="@color/colorWhite"
             app:textMargin="5dp"
             app:textSize="15sp"

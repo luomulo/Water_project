@@ -1,42 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        package="keyur.diwan.project.waterReminder">
+        package="wwj.android.project.waterReminder">
 
     <!-- 权限声明：振动权限 -->
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+
+    <uses-permission android:name="android.permission.NFC" />
+
     <!-- 权限声明：开机自启动权限 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.NFC_TRANSACTION_EVENT" />
+
+
 
     <application
             android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-
+        <service
+                android:name="wwj.android.project.waterReminder.MyHostNfcService"
+                android:exported="true"
+                android:permission="android.permission.BIND_NFC_SERVICE">
+            <intent-filter>
+                <action android:name="android.nfc.action.HOST_TRANSACTION_DETECTED" />
+            </intent-filter>
+        </service>
         <!-- 欢迎页Activity -->
-        <activity android:name="keyur.diwan.project.waterReminder.WalkThroughActivity"
+        <activity android:name="wwj.android.project.waterReminder.WalkThroughActivity"
                 android:screenOrientation="portrait">
         </activity>
 
         <!-- 统计页面Activity -->
         <activity
-                android:name="keyur.diwan.project.waterReminder.StatsActivity"
+                android:name="wwj.android.project.waterReminder.StatsActivity"
                 android:theme="@style/MainTheme"
                 android:screenOrientation="portrait">
         </activity>
 
         <!-- 用户信息初始化页面Activity -->
-        <activity android:name="keyur.diwan.project.waterReminder.InitUserInfoActivity"
+        <activity android:name="wwj.android.project.waterReminder.InitUserInfoActivity"
                 android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name="wwj.android.project.waterReminder.NFCActivity"
+                android:screenOrientation="portrait">
+        <!-- NFC -->
+        <intent-filter>
+            <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
+        </activity>
         <!-- 主Activity -->
         <activity
-                android:name="keyur.diwan.project.waterReminder.MainActivity"
+                android:name="wwj.android.project.waterReminder.MainActivity"
                 android:theme="@style/MainTheme"
                 android:screenOrientation="portrait">
 
@@ -45,13 +68,30 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
         </activity>
 
         <!-- 饮水提醒通知接收器 -->
-        <receiver android:name="keyur.diwan.project.waterReminder.recievers.NotifierReceiver"/>
+        <receiver android:name="wwj.android.project.waterReminder.recievers.NotifierReceiver"/>
+        <receiver
+                android:name="wwj.android.project.waterReminder.recievers.MyReceiver"
+                android:enabled="true">
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+            </intent-filter>
+
+        </receiver>
+
 
         <!-- 开机自启动接收器 -->
-        <receiver android:name="keyur.diwan.project.waterReminder.recievers.BootReceiver">
+        <receiver android:name="wwj.android.project.waterReminder.recievers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

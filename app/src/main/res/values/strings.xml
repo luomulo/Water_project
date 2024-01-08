@@ -18,6 +18,7 @@
     <string name="notif_messsage_hint">通知消息</string>
     <string name="notif_tone_hint">通知风格</string>
     <string name="notif_freq_hint">通知频率</string>
+    <string name="some_description">Your Description Here</string>
     <string name="walkthrough_text_one">水占据了你体重的60%。你的身体依靠水来维持活力。</string>
     <string name="walkthough_text_two">缺少饮水可能导致脱水症状，即使是轻微的脱水也会使你筋疲力尽.</string>
     <string name="walkthrough_text_three">你身体里的每一个细胞，组织和器官都需要水来正常地运作。</string>
